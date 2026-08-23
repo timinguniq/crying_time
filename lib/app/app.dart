@@ -9,9 +9,8 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      title: 'crying_time',
+      title: '눈물타임',
       theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
       routerConfig: ref.watch(appRouterProvider),
       debugShowCheckedModeBanner: false,
     );

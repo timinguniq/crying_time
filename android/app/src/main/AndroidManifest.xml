@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="crying_time"
+        android:label="눈물타임"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

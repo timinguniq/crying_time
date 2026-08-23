@@ -9,19 +9,19 @@ part of 'app_router.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 /// 라우터는 앱 수명 내내 살아있어야 하므로 keepAlive.
-/// 로그인 가드 같은 전역 분기는 여기 `redirect` 에 붙인다.
+/// 스플래시가 저장된 수령 기록을 보고 온보딩/홈으로 직접 보낸다.
 
 @ProviderFor(appRouter)
 final appRouterProvider = AppRouterProvider._();
 
 /// 라우터는 앱 수명 내내 살아있어야 하므로 keepAlive.
-/// 로그인 가드 같은 전역 분기는 여기 `redirect` 에 붙인다.
+/// 스플래시가 저장된 수령 기록을 보고 온보딩/홈으로 직접 보낸다.
 
 final class AppRouterProvider
     extends $FunctionalProvider<GoRouter, GoRouter, GoRouter>
     with $Provider<GoRouter> {
   /// 라우터는 앱 수명 내내 살아있어야 하므로 keepAlive.
-  /// 로그인 가드 같은 전역 분기는 여기 `redirect` 에 붙인다.
+  /// 스플래시가 저장된 수령 기록을 보고 온보딩/홈으로 직접 보낸다.
   AppRouterProvider._()
     : super(
         from: null,
@@ -55,4 +55,4 @@ final class AppRouterProvider
   }
 }
 
-String _$appRouterHash() => r'ba84329a8c2fd840c55e8b687401571cf878bc53';
+String _$appRouterHash() => r'625446041346493b5a63c6eebbc842aac469bcdd';

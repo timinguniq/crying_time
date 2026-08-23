@@ -82,6 +82,8 @@ service-account*.json
 google-services.json
 GoogleService-Info.plist
 firebase_options.dart
+# flutterfire 가 만드는 프로젝트 매핑. projectId · appId 가 위 파일들과 똑같이 들어 있다.
+firebase.json
 # 에뮬레이터 · CLI 부산물
 .firebase/
 firebase-debug.log
