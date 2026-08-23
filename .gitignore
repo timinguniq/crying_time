@@ -1,0 +1,101 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Widget Preview related
+.widget_preview/
+
+# ── 비밀정보 / 로컬 설정 (공개 저장소에 절대 올리지 않는다) ──
+
+# 환경변수 · dart-define
+.env
+.env.*
+!.env.example
+env.json
+*.env.json
+dart_defines/
+
+# 서명 키 · 인증서 (android/.gitignore, ios/.gitignore 와 중복이지만 방어적으로 둔다)
+*.jks
+*.keystore
+key.properties
+*.p12
+*.pem
+*.cer
+*.p8
+*.certSigningRequest
+*.mobileprovision
+
+# Firebase / FCM
+#
+# 서버 전송용 비공개 키 — 유출되면 남이 우리 앱 이름으로 푸시를 보낼 수 있다.
+# Firebase 콘솔에서 받는 파일명이 <project>-firebase-adminsdk-xxxxx-xxxxxxxx.json 형태다.
+*firebase-adminsdk*.json
+serviceAccountKey.json
+service-account*.json
+*-service-account.json
+# APNs 인증 키(AuthKey_XXXX.p8) 와 푸시 인증서는 위 "서명 키 · 인증서" 섹션에서 걸린다.
+#
+# 클라이언트 설정 파일 — 그 자체로 비밀은 아니지만 프로젝트 식별자가 드러난다.
+google-services.json
+GoogleService-Info.plist
+firebase_options.dart
+# 에뮬레이터 · CLI 부산물
+.firebase/
+firebase-debug.log
+firestore-debug.log
+database-debug.log
+pubsub-debug.log
+ui-debug.log
+
+# AI 에이전트 로컬 설정
+.claude/
+.codex/
+.agents/
+CLAUDE.md
+AGENTS.md
+
+# 로컬 SDK 경로 등 머신 종속 설정
+local.properties
