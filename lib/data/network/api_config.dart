@@ -4,7 +4,7 @@
 abstract final class ApiConfig {
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'https://api.crying-time.local',
+    defaultValue: 'https://crying-time-api.devjj.co.kr',
   );
 
   /// 서버가 아직 없으므로 기본값은 목(mock)이다. 실제 서버가 뜨면

@@ -14,7 +14,7 @@
 
 | 항목 | 값 |
 | --- | --- |
-| Base URL | `--dart-define=API_BASE_URL` (기본 `https://api.crying-time.local`) |
+| Base URL | `--dart-define=API_BASE_URL` (기본 `https://crying-time-api.devjj.co.kr`) |
 | Content-Type | `application/json` |
 | 인증 | 없음. `deviceId` 가 유일한 식별자다 |
 | connect timeout | 10초 |
