@@ -21,10 +21,10 @@
 | receive timeout | 10초 |
 | 응답 본문 | 쓰지 않는다. 상태 코드만 본다 |
 
-앱은 목 모드로 기본 실행된다. 실서버를 붙이려면:
+기본 서버 주소는 `ApiConfig.baseUrl` 이다. 다른 서버를 붙이려면:
 
 ```bash
-flutter run --dart-define=USE_MOCK_API=false --dart-define=API_BASE_URL=https://api.example.com
+flutter run --dart-define=API_BASE_URL=https://api.example.com
 ```
 
 ### 공통 필드
@@ -211,27 +211,11 @@ Content-Type: application/json
 
 ---
 
-## 목 서버
-
-서버가 없어도 앱이 돌아간다. 기본값이 목 모드다.
-`MockDeviceRemoteDataSource` (`lib/data/datasource/device_remote_data_source.dart`) 가
-요청 본문을 로그로 찍고 300ms 뒤 성공을 돌려준다.
-
-```
-[mock] POST /v1/devices {deviceId: 3d710650-..., fcmToken: mock-fcm-token, platform: android, utcOffsetMinutes: 540}
-[mock] PUT /v1/devices/3d710650-.../push-enabled {enabled: false}
-[mock] PUT /v1/devices/3d710650-.../push-schedule {enabled: true, offsetDays: [15, 3, 0], nextPickupDate: 2026-10-12, utcOffsetMinutes: 540}
-```
-
-실서버가 뜨면 `--dart-define=USE_MOCK_API=false` 만 주면 된다. 코드는 그대로다.
-
----
-
 ## 관련 파일
 
 | 파일 | 역할 |
 | --- | --- |
-| `lib/data/datasource/device_remote_data_source.dart` | 세 엔드포인트의 실제 호출 + 목 구현 |
+| `lib/data/datasource/device_remote_data_source.dart` | 세 엔드포인트의 실제 호출 |
 | `lib/data/dto/device_registration_request_dto.dart` | 1번 요청 본문 |
 | `lib/data/dto/push_enabled_request_dto.dart` | 2번 요청 본문 |
 | `lib/data/dto/push_schedule_request_dto.dart` | 3번 요청 본문 |

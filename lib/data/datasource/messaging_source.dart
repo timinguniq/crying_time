@@ -1,5 +1,4 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 
 /// FCM 토큰 발급 창구. 토큰은 서버가 이 기기로 푸시를 보내는 주소다.
 abstract interface class MessagingSource {
@@ -27,18 +26,4 @@ class FirebaseMessagingSource implements MessagingSource {
   @override
   Stream<String> get tokenRefreshes =>
       FirebaseMessaging.instance.onTokenRefresh;
-}
-
-/// 서버와 Firebase 설정이 없는 상태에서도 앱을 띄우기 위한 목.
-class MockMessagingSource implements MessagingSource {
-  const MockMessagingSource();
-
-  @override
-  Future<String?> token() async {
-    debugPrint('[mock] FCM 토큰 발급');
-    return 'mock-fcm-token';
-  }
-
-  @override
-  Stream<String> get tokenRefreshes => const Stream<String>.empty();
 }

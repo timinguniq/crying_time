@@ -100,7 +100,7 @@ tearDown(() => getIt.reset());
 
 ## 서버 연동
 
-서버는 아직 없다. 아래 계약을 전제로 클라이언트만 먼저 만들었고, 기본 실행은 목 모드다.
+서버 주소는 `ApiConfig.baseUrl` (`lib/data/network/api_config.dart`) 이고 `--dart-define=API_BASE_URL` 로 바꿀 수 있다.
 전체 명세는 [`docs/api.md`](docs/api.md) 에 있다.
 
 ### 기기 등록
@@ -181,8 +181,7 @@ dart pub global activate flutterfire_cli
 flutterfire configure
 ```
 
-설정 파일이 없어도 목 모드(기본값)로는 앱이 뜬다. `main` 이 목 모드에서 `Firebase.initializeApp()`
-을 건너뛰고, FCM 토큰과 API 호출을 목 구현으로 대체한다.
+설정 파일이 없으면 `main` 의 `Firebase.initializeApp()` 이 실패해 앱이 뜨지 않는다.
 
 ## 명령어
 
@@ -193,11 +192,6 @@ dart run build_runner watch          # 개발 중 자동 생성
 flutter analyze
 flutter test
 
-# 목 모드 (기본) — 서버·Firebase 설정 없이 실행. 요청 본문은 로그로 확인한다
-flutter run
-
-# 실서버 연동
-flutter run \
-  --dart-define=USE_MOCK_API=false \
-  --dart-define=API_BASE_URL=https://api.example.com
+flutter run                                                     # 기본 서버(ApiConfig.baseUrl)
+flutter run --dart-define=API_BASE_URL=https://api.example.com  # 다른 서버
 ```

@@ -8,7 +8,6 @@ import 'package:crying_time/data/datasource/home_visit_local_data_source.dart';
 import 'package:crying_time/data/datasource/messaging_source.dart';
 import 'package:crying_time/data/datasource/pickup_local_data_source.dart';
 import 'package:crying_time/data/datasource/push_schedule_local_data_source.dart';
-import 'package:crying_time/data/network/api_config.dart';
 import 'package:crying_time/data/network/dio_client.dart';
 import 'package:crying_time/data/repository/device_repository_impl.dart';
 import 'package:crying_time/data/repository/home_visit_repository_impl.dart';
@@ -33,7 +32,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// domain / data 계층의 객체 그래프를 조립한다. 앱 시작 시 `main` 에서 한 번 호출한다.
 ///
 /// 여기서만 구현체(Impl)를 알고, 나머지 코드는 인터페이스만 본다.
-/// 서버가 아직 없으므로 원격 소스는 [ApiConfig.useMockApi] 값에 따라 목으로 바뀐다.
 void configureDependencies() {
   getIt
     // network
@@ -49,14 +47,10 @@ void configureDependencies() {
       () => DeviceIdSourceImpl(getIt<SharedPreferencesAsync>()),
     )
     ..registerLazySingleton<MessagingSource>(
-      () => ApiConfig.useMockApi
-          ? const MockMessagingSource()
-          : const FirebaseMessagingSource(),
+      () => const FirebaseMessagingSource(),
     )
     ..registerLazySingleton<DeviceRemoteDataSource>(
-      () => ApiConfig.useMockApi
-          ? const MockDeviceRemoteDataSource()
-          : DeviceRemoteDataSourceImpl(getIt<Dio>()),
+      () => DeviceRemoteDataSourceImpl(getIt<Dio>()),
     )
     ..registerLazySingleton<PickupLocalDataSource>(
       () => PickupLocalDataSourceImpl(getIt<SharedPreferencesAsync>()),
