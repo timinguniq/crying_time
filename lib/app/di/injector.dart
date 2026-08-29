@@ -1,20 +1,27 @@
+import 'package:crying_time/app/ads/ad_config.dart';
+import 'package:crying_time/app/ads/interstitial_ad_service.dart';
 import 'package:crying_time/app/di/service_locator.dart';
 import 'package:crying_time/data/datasource/device_environment.dart';
 import 'package:crying_time/data/datasource/device_id_source.dart';
 import 'package:crying_time/data/datasource/device_remote_data_source.dart';
+import 'package:crying_time/data/datasource/home_visit_local_data_source.dart';
 import 'package:crying_time/data/datasource/messaging_source.dart';
 import 'package:crying_time/data/datasource/pickup_local_data_source.dart';
 import 'package:crying_time/data/datasource/push_schedule_local_data_source.dart';
 import 'package:crying_time/data/network/api_config.dart';
 import 'package:crying_time/data/network/dio_client.dart';
 import 'package:crying_time/data/repository/device_repository_impl.dart';
+import 'package:crying_time/data/repository/home_visit_repository_impl.dart';
 import 'package:crying_time/data/repository/pickup_repository_impl.dart';
 import 'package:crying_time/data/repository/push_schedule_repository_impl.dart';
 import 'package:crying_time/domain/repository/device_repository.dart';
+import 'package:crying_time/domain/repository/home_visit_repository.dart';
 import 'package:crying_time/domain/repository/pickup_repository.dart';
 import 'package:crying_time/domain/repository/push_schedule_repository.dart';
 import 'package:crying_time/domain/usecase/get_pickup_info.dart';
 import 'package:crying_time/domain/usecase/get_push_schedule.dart';
+import 'package:crying_time/domain/usecase/mark_interstitial_shown.dart';
+import 'package:crying_time/domain/usecase/record_home_visit.dart';
 import 'package:crying_time/domain/usecase/register_device.dart';
 import 'package:crying_time/domain/usecase/save_pickup_info.dart';
 import 'package:crying_time/domain/usecase/set_push_enabled.dart';
@@ -33,6 +40,10 @@ void configureDependencies() {
     ..registerLazySingleton<Dio>(createDio)
     ..registerLazySingleton<SharedPreferencesAsync>(SharedPreferencesAsync.new)
     ..registerLazySingleton<DeviceEnvironment>(DeviceEnvironmentImpl.new)
+    // ads
+    ..registerLazySingleton<InterstitialAdService>(
+      () => AdMobInterstitialAdService(AdConfig.homeInterstitialAdUnitId),
+    )
     // data source
     ..registerLazySingleton<DeviceIdSource>(
       () => DeviceIdSourceImpl(getIt<SharedPreferencesAsync>()),
@@ -53,6 +64,9 @@ void configureDependencies() {
     ..registerLazySingleton<PushScheduleLocalDataSource>(
       () => PushScheduleLocalDataSourceImpl(getIt<SharedPreferencesAsync>()),
     )
+    ..registerLazySingleton<HomeVisitLocalDataSource>(
+      () => HomeVisitLocalDataSourceImpl(getIt<SharedPreferencesAsync>()),
+    )
     // repository
     ..registerLazySingleton<DeviceRepository>(
       () => DeviceRepositoryImpl(
@@ -72,6 +86,9 @@ void configureDependencies() {
         deviceIdSource: getIt<DeviceIdSource>(),
         environment: getIt<DeviceEnvironment>(),
       ),
+    )
+    ..registerLazySingleton<HomeVisitRepository>(
+      () => HomeVisitRepositoryImpl(getIt<HomeVisitLocalDataSource>()),
     )
     // use case
     ..registerLazySingleton<RegisterDevice>(
@@ -100,5 +117,11 @@ void configureDependencies() {
         getIt<PickupRepository>(),
         getIt<PushScheduleRepository>(),
       ),
+    )
+    ..registerLazySingleton<RecordHomeVisit>(
+      () => RecordHomeVisit(getIt<HomeVisitRepository>()),
+    )
+    ..registerLazySingleton<MarkInterstitialShown>(
+      () => MarkInterstitialShown(getIt<HomeVisitRepository>()),
     );
 }

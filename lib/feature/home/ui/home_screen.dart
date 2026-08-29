@@ -1,9 +1,13 @@
+import 'dart:async';
+
+import 'package:crying_time/app/ads/ad_config.dart';
 import 'package:crying_time/app/theme/app_colors.dart';
 import 'package:crying_time/domain/entity/pickup_info.dart';
 import 'package:crying_time/domain/failure/failure.dart';
 import 'package:crying_time/feature/common/failure_message.dart';
 import 'package:crying_time/feature/common/korean_date.dart';
 import 'package:crying_time/feature/common/push_offset_label.dart';
+import 'package:crying_time/feature/common/widget/app_banner_ad.dart';
 import 'package:crying_time/feature/common/widget/app_outline_button.dart';
 import 'package:crying_time/feature/common/widget/app_section_card.dart';
 import 'package:crying_time/feature/common/widget/app_soft_button.dart';
@@ -14,11 +18,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // 홈 화면이 새로 만들어질 때만 방문으로 센다. 설정·수령일 변경에서
+    // 돌아올 때는 이 화면이 그대로 살아 있어 다시 세지 않는다.
+    unawaited(ref.read(homeViewModelProvider.notifier).showInterstitialIfDue());
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final asyncState = ref.watch(homeViewModelProvider);
 
     return Scaffold(
@@ -31,6 +48,11 @@ class HomeScreen extends ConsumerWidget {
           ),
           _ => const Center(child: CircularProgressIndicator()),
         },
+      ),
+      // 콘텐츠는 스크롤되고 배너는 화면 아래에 고정된다.
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: AppBannerAd(adUnitId: AdConfig.homeBannerAdUnitId),
       ),
     );
   }

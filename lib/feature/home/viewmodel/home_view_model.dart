@@ -1,3 +1,4 @@
+import 'package:crying_time/app/ads/interstitial_ad_service.dart';
 import 'package:crying_time/app/di/service_locator.dart';
 import 'package:crying_time/domain/entity/pickup_info.dart';
 import 'package:crying_time/domain/entity/push_schedule.dart';
@@ -5,6 +6,8 @@ import 'package:crying_time/domain/failure/failure.dart';
 import 'package:crying_time/domain/result/result.dart';
 import 'package:crying_time/domain/usecase/get_pickup_info.dart';
 import 'package:crying_time/domain/usecase/get_push_schedule.dart';
+import 'package:crying_time/domain/usecase/mark_interstitial_shown.dart';
+import 'package:crying_time/domain/usecase/record_home_visit.dart';
 import 'package:crying_time/domain/usecase/save_pickup_info.dart';
 import 'package:crying_time/domain/usecase/usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -89,6 +92,21 @@ class HomeViewModel extends _$HomeViewModel {
         );
       case Err(:final failure):
         throw failure;
+    }
+  }
+
+  /// 홈에 들어올 때마다 방문을 세고, 차례가 되면 전면광고를 띄운다.
+  ///
+  /// 광고가 실제로 떠야만 횟수를 0으로 되돌린다. 못 띄웠으면 횟수는 그대로라
+  /// 다음 방문에 다시 시도한다. 실패는 조용히 넘긴다 — 광고 때문에 홈이
+  /// 깨지면 안 된다.
+  Future<void> showInterstitialIfDue() async {
+    final recorded = await getIt<RecordHomeVisit>()(const NoParams());
+    if (recorded case Ok(value: true)) {
+      final shown = await getIt<InterstitialAdService>().show();
+      if (shown) {
+        await getIt<MarkInterstitialShown>()(const NoParams());
+      }
     }
   }
 }
